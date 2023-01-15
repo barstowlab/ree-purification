@@ -57,7 +57,7 @@ loadVol = 400e-6
 # We start out with the original fitted fractions of each site, and then figure out how to reduce
 # the fractions of binding sites 2 and 3 as the fraction of binding site 1 increases. 
 
-fB1_Array = [0.4618352672074258, 0.475, 0.5, 0.55, 0.6, 0.65, 0.70, 0.75, 0.8, 0.85, 0.9, 0.95]
+fB1_Array = [0.4618352672074258, 0.473, 0.482, 0.502, 0.530, 0.584, 0.778, 0.909]
 fB2_0 = 0.3703005831465813
 fB3_0 = 0.16786402382522572
 

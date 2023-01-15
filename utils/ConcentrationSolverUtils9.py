@@ -1568,7 +1568,8 @@ def Run_Macro_Cycle_3Metals_3Sites(inputData):
 	# until the target purity is achieved
 	while i <= inputData.maxSubCycles and currentPurity < inputData.targetPurity:
 		
-		print(i)
+		if inputData.printDiagnostics == True:
+			print(i)
 		
 		# This is the most important calculation. Calculate the concentrations of metals that 
 		# are bound and free in the binding column
@@ -2027,6 +2028,8 @@ initial_nBT, fB_Array, initial_nM1T,initial_nM2T, initial_nM3T, initial_loadVol,
 		
 		fB1_Array.append(fB1)
 		
+		print('fB1: ' + str(fB1))
+		
 		inputData = \
 		InputData_3Metals_3Sites(\
 		kd1_1, kd1_2, kd1_3, kd2_1, kd2_2, kd2_3, kd3_1, kd3_2, kd3_3, \
@@ -2176,7 +2179,9 @@ inputData_microbe3):
 	
 	while i <= inputData_microbe1.maxSubCycles and currentPurity < inputData_microbe1.targetPurity:
 		
-		print(i)
+		
+		if inputData_microbe1.printDiagnostics == True:
+			print(i)
 		
 		# ---------------------------------------------------------------------------------------- #
 		# Microbe 1	to Enrich for Metal 1

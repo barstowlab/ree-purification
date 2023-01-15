@@ -2,7 +2,8 @@ from utils.ConcentrationSolverUtils9 import InputData_3Metals_3Sites, \
 Calculate_Sub_Cycles_to_Reach_Target_Purity_and_M1_Remaining_3M_3S, \
 Calculate_Binding_Site_Fraction_Arrays
 
-from utils.vectorOutput3 import writeOutputMatrix, generateOutputMatrixWithHeaders, ensure_dir
+from utils.vectorOutput3 import writeOutputMatrix, ensure_dir, \
+generateOutputMatrix_WithNonEqualVectors_WithHeaders
 
 from os.path import join
 
@@ -48,54 +49,71 @@ loadVol = 400e-6
 # We start out with the original fitted fractions of each site, and then figure out how to reduce
 # the fractions of binding sites 2 and 3 as the fraction of binding site 1 increases. 
 
-fB1_Array = [0.4618352672074258, 0.475, 0.5, 0.55, 0.6, 0.65, 0.70, 0.75, 0.8, 0.85, 0.9, 0.95]
+fB1_Array = [0.4618352672074258, 0.675, 0.70, 0.725, 0.75, 0.775, 0.8, 0.85, 0.9, 0.95]
 fB2_0 = 0.3703005831465813
 fB3_0 = 0.16786402382522572
 
 fB2_Array, fB3_Array = Calculate_Binding_Site_Fraction_Arrays(fB1_Array, fB2_0, fB3_0)
-
-fB_Array = []
-i = 0
-while i < len(fB1_Array):
-	fB_Array.append([fB1_Array[i], fB2_Array[i], fB3_Array[i]]) 
-	i += 1
-
-firstIndex = -3
-fB_Array = fB_Array[firstIndex:-1]
-fB1_Array = fB1_Array[firstIndex:-1]
 # ------------------------------------------------------------------------------------------------ #
 
 
 # ------------------------------------------------------------------------------------------------ #
-targetPurities = [0.99]
+targetPurities = [0.8, 0.9, 0.95, 0.99]
+firstIndexArray = [1, 4, 6, 7]
 
 scenarioDict = {}
 
+i = 0
 for purity in targetPurities:
 	
 	scenarioKey = str(purity)
+	
+	firstIndex = firstIndexArray[i]
+	
+	fB1_Array_local = fB1_Array[firstIndex:]
+	fB2_Array_local = fB2_Array[firstIndex:]
+	fB3_Array_local = fB3_Array[firstIndex:]
+	
+	fB_Array_local = []
+	j = 0
+	while j < len(fB1_Array_local):
+		fB_Array_local.append([fB1_Array_local[j], fB2_Array_local[j], fB3_Array_local[j]]) 
+		j += 1
 
+	print('Target Purity: ' + str(purity))
+	
 	returnDict = Calculate_Sub_Cycles_to_Reach_Target_Purity_and_M1_Remaining_3M_3S(\
 	kd1_1, kd1_2, kd1_3, kd2_1, kd2_2, kd2_3, kd3_1, kd3_2, kd3_3, \
-	nBT, fB_Array, nM1T, nM2T, nM3T, loadVol, purity)
+	nBT, fB_Array_local, nM1T, nM2T, nM3T, loadVol, purity)
+	
 	
 	scenarioDict[scenarioKey] = returnDict
+	i += 1
 # ------------------------------------------------------------------------------------------------ #
+
+
+
 
 # ------------------------------------------------------------------------------------------------ #
 # Plot results and output to CSV
 
-headers = ['fB1']
-vectorList = [fB1_Array]
+headers = []
+vectorList = []
 
 figure()
 
 for key in scenarioDict.keys():
 	subCycleNumberArray = scenarioDict[key]['subCycleNumber']
+	
+	fB1_Array = scenarioDict[key]['fB1_Array']
 	plot(fB1_Array, subCycleNumberArray, label=key)
 	
+	headers.append(key + '_fB1')
 	headers.append(key + '_subCycleNumber')
+	vectorList.append(fB1_Array)
 	vectorList.append(subCycleNumberArray)
+	
+	
 	
 
 grid()
@@ -104,7 +122,7 @@ xlabel('Fraction of B1')
 ylabel('Sub-cycles to Target Purity')
 show()
 
-oMatrix = generateOutputMatrixWithHeaders(vectorList, headers)
+oMatrix = generateOutputMatrix_WithNonEqualVectors_WithHeaders(vectorList, headers)
 writeOutputMatrix(join(outputDir, fileName), oMatrix)
 # ------------------------------------------------------------------------------------------------ #
 
