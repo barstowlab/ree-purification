@@ -907,7 +907,8 @@ class InputData_3Metals_3Sites:
 	targetPurity=0.9, preferred_operating_concentration=0.1, \
 	lowest_allowed_vol=0.001, \
 	printFigures=False, printDiagnostics=True, maxSubCycles=20, maxMacroCycles=100, \
-	printPurity=False, adjustLoadVol=True, adjustBindingSites=True):
+	printPurity=False, adjustLoadVol=True, adjustBindingSites=True, \
+	adjustBindingSiteTarget='nMT/2'):
 		
 		import pdb
 		
@@ -918,6 +919,7 @@ class InputData_3Metals_3Sites:
 		self.printPurity = printPurity
 		self.adjustLoadVol = adjustLoadVol
 		self.adjustBindingSites = adjustBindingSites
+		self.adjustBindingSiteTarget = adjustBindingSiteTarget
 		
 		# Dissociation constants for each of the binding sites for each of the metals
 		# Site 1
@@ -1063,7 +1065,8 @@ class InputData_3Metals_1Site:
 	targetPurity=0.9, preferred_operating_concentration=0.1, \
 	lowest_allowed_vol=0.001, \
 	printFigures=False, printDiagnostics=True, maxSubCycles=20, maxMacroCycles=100, \
-	printPurity=False, adjustLoadVol=True, adjustBindingSites=True):
+	printPurity=False, adjustLoadVol=True, adjustBindingSites=True, \
+	adjustBindingSiteTarget='nM1'):
 		
 		import pdb
 		
@@ -1074,6 +1077,7 @@ class InputData_3Metals_1Site:
 		self.printPurity = printPurity
 		self.adjustLoadVol = adjustLoadVol
 		self.adjustBindingSites = adjustBindingSites
+		self.adjustBindingSiteTarget = adjustBindingSiteTarget
 		
 		self.kd1 = kd1
 		self.kd2 = kd2
@@ -1402,11 +1406,23 @@ def Calculate_New_Binding_Site_Numbers_and_Load_Volume(eluteOrWashSolution, inpu
 
 	if inputData.adjustBindingSites == True:
 		# Reduce the number of binding sites to the number of M1 atoms
-		nM1 = eluteOrWashSolution.nM1
-		newNBT = nM1 * 1
-		newNB1 = newNBT * inputData.fB1
-		newNB2 = newNBT * inputData.fB2
-		newNB3 = newNBT * inputData.fB3
+		
+		if inputData.adjustBindingSiteTarget == 'nM1':		
+			nM1 = eluteOrWashSolution.nM1
+			newNBT = nM1 * 1
+			newNB1 = newNBT * inputData.fB1
+			newNB2 = newNBT * inputData.fB2
+			newNB3 = newNBT * inputData.fB3
+		
+		elif inputData.adjustBindingSiteTarget == 'nMT/2':
+			nM1 = eluteOrWashSolution.nM1
+			nM2 = eluteOrWashSolution.nM2
+			nM3 = eluteOrWashSolution.nM3
+			newNBT = (nM1 + nM2 + nM3) / 2
+			newNB1 = newNBT * inputData.fB1
+			newNB2 = newNBT * inputData.fB2
+			newNB3 = newNBT * inputData.fB3
+			
 		
 	else:
 		newNBT = inputData.initial_nBT 
@@ -1432,7 +1448,7 @@ def Calculate_New_Binding_Site_Numbers_and_Load_Volume(eluteOrWashSolution, inpu
 
 # ------------------------------------------------------------------------------------------------ #
 def Calculate_New_Binding_Site_Numbers_and_Load_Volume_2(eluteOrWashSolution, \
-inputData, target='nM1'):
+inputData):
 	
 	import pdb
 	
@@ -1441,17 +1457,21 @@ inputData, target='nM1'):
 	
 
 	if inputData.adjustBindingSites == True:
-		# Reduce the number of binding sites to the number of M1 atoms
 		
-		if target == 'nM1':
+		if inputData.adjustBindingSiteTarget == 'nM1':		
 			nM1 = eluteOrWashSolution.nM1
 			newNBT = nM1 * 1
-		elif target == 'nM2':
+		elif inputData.adjustBindingSiteTarget == 'nM2':
 			nM2 = eluteOrWashSolution.nM2
 			newNBT = nM2 * 1
-		elif target == 'nM3':
+		elif inputData.adjustBindingSiteTarget == 'nM3':
 			nM3 = eluteOrWashSolution.nM3
 			newNBT = nM3 * 1
+		elif inputData.adjustBindingSiteTarget == 'nMT/2':
+			nM1 = eluteOrWashSolution.nM1
+			nM2 = eluteOrWashSolution.nM2
+			nM3 = eluteOrWashSolution.nM3
+			newNBT = (nM1 + nM2 + nM3) / 2
 		
 		newNB1 = newNBT * inputData.fB1
 		newNB2 = newNBT * inputData.fB2
@@ -1525,10 +1545,20 @@ def Calculate_New_Binding_Site_Number_and_Load_Volume(eluteOrWashSolution, input
 	preferred_operating_concentration = inputData.preferred_operating_concentration
 	
 
+	
 	if inputData.adjustBindingSites == True:
-		# Reduce the number of binding sites to the number of M1 atoms
-		nM1 = eluteOrWashSolution.nM1
-		newNBT = nM1 * 1
+		
+		if inputData.adjustBindingSiteTarget == 'nM1':
+			# Reduce the number of binding sites to the number of M1 atoms
+			nM1 = eluteOrWashSolution.nM1
+			newNBT = nM1 * 1
+		
+		elif inputData.adjustBindingSiteTarget == 'nMT/2':
+			nM1 = eluteOrWashSolution.nM1
+			nM2 = eluteOrWashSolution.nM2
+			nM3 = eluteOrWashSolution.nM3
+			newNBT = (nM1 + nM2 + nM3) / 2
+	
 	else:
 		newNBT = inputData.initial_nBT 
 
@@ -1893,7 +1923,8 @@ initial_nM1T, initial_nM2T, initial_nM3T, initial_nBT, fB1, fB2, fB3, initial_lo
 
 # ------------------------------------------------------------------------------------------------ #
 def Calculate_Sub_Cycles_to_Reach_Target_Purity_and_M1_Remaining_3M_1S(\
-kdArray, initial_nBT, initial_nM1T,initial_nM2T, initial_nM3T, initial_loadVol, targetPurity):
+kdArray, initial_nBT, initial_nM1T,initial_nM2T, initial_nM3T, initial_loadVol, targetPurity, \
+adjustBindingSiteTarget):
 
 	import pdb
 
@@ -1917,7 +1948,8 @@ kdArray, initial_nBT, initial_nM1T,initial_nM2T, initial_nM3T, initial_loadVol, 
 		targetPurity=targetPurity, preferred_operating_concentration=0.1, \
 		lowest_allowed_vol=0.001, \
 		printFigures=False, printDiagnostics=False, maxSubCycles=1000, maxMacroCycles=100, \
-		printPurity=False, adjustLoadVol=True, adjustBindingSites=True)
+		printPurity=False, adjustLoadVol=True, adjustBindingSites=True, \
+		adjustBindingSiteTarget='nMT/2')
 	
 		macroCycleDiagnostic = Run_Macro_Cycle_3Metals_1Site(inputData)
 	
@@ -2011,7 +2043,8 @@ def Increment_Binding_Site_Fraction(microbe_fB_0, increment_array):
 # ------------------------------------------------------------------------------------------------ #
 def Calculate_Sub_Cycles_to_Reach_Target_Purity_and_M1_Remaining_3M_3S(\
 kd1_1, kd1_2, kd1_3, kd2_1, kd2_2, kd2_3, kd3_1, kd3_2, kd3_3, \
-initial_nBT, fB_Array, initial_nM1T,initial_nM2T, initial_nM3T, initial_loadVol, targetPurity):
+initial_nBT, fB_Array, initial_nM1T,initial_nM2T, initial_nM3T, initial_loadVol, targetPurity, \
+adjustBindingSiteTarget):
 
 	import pdb
 
@@ -2040,7 +2073,8 @@ initial_nBT, fB_Array, initial_nM1T,initial_nM2T, initial_nM3T, initial_loadVol,
 		targetPurity=targetPurity, preferred_operating_concentration=0.1, \
 		lowest_allowed_vol=0.001, \
 		printFigures=False, printDiagnostics=False, maxSubCycles=1000, maxMacroCycles=100, \
-		printPurity=False, adjustLoadVol=True, adjustBindingSites=True)
+		printPurity=False, adjustLoadVol=True, adjustBindingSites=True, \
+		adjustBindingSiteTarget=adjustBindingSiteTarget)
 	
 		macroCycleDiagnostic = Run_Macro_Cycle_3Metals_3Sites(inputData)
 	
@@ -2096,7 +2130,7 @@ nM1T, nM2T, nM3T, loadVol, targetPurity):
 		kd1_1, kd1_2, kd1_3, kd2_1, kd2_2, kd2_3, kd3_1, kd3_2, kd3_3, \
 		nM1T, nM2T, nM3T, nBT, microbe1_fB1, microbe1_fB2, microbe1_fB3, \
 		loadVol, adjustLoadVol=True, adjustBindingSites=True, maxSubCycles=maxSubCycles, \
-		targetPurity=targetPurity) 
+		targetPurity=targetPurity, adjustBindingSiteTarget='nM1') 
 		# ---------------------------------------------------------------------------------------- #
 	
 		# ---------------------------------------------------------------------------------------- #
@@ -2110,7 +2144,7 @@ nM1T, nM2T, nM3T, loadVol, targetPurity):
 		kd1_1, kd1_2, kd1_3, kd2_1, kd2_2, kd2_3, kd3_1, kd3_2, kd3_3, \
 		nM1T, nM2T, nM3T, nBT, microbe2_fB1, microbe2_fB2, microbe2_fB3, \
 		loadVol, adjustLoadVol=True, adjustBindingSites=True, maxSubCycles=maxSubCycles, \
-		targetPurity=targetPurity) 
+		targetPurity=targetPurity, adjustBindingSiteTarget='nM2') 
 		# ---------------------------------------------------------------------------------------- #
 	
 		# ---------------------------------------------------------------------------------------- #
@@ -2124,7 +2158,7 @@ nM1T, nM2T, nM3T, loadVol, targetPurity):
 		kd1_1, kd1_2, kd1_3, kd2_1, kd2_2, kd2_3, kd3_1, kd3_2, kd3_3, \
 		nM1T, nM2T, nM3T, nBT, microbe3_fB1, microbe3_fB2, microbe3_fB3, \
 		loadVol, adjustLoadVol=True, adjustBindingSites=True, maxSubCycles=maxSubCycles, \
-		targetPurity=targetPurity) 
+		targetPurity=targetPurity, adjustBindingSiteTarget='nM3') 
 		# ---------------------------------------------------------------------------------------- #
 	
 		# ---------------------------------------------------------------------------------------- #
@@ -2158,7 +2192,7 @@ nM1T, nM2T, nM3T, loadVol, targetPurity):
 # This function performs sub-cycles until a target purity of metal 1 is reached
 
 def Run_Macro_Cycle_3Metals_3Sites_3Microbes(inputData_microbe1, inputData_microbe2, \
-inputData_microbe3):
+inputData_microbe3, adjustBindingSiteTarget='nMT/2'):
 	
 	import pdb
 
@@ -2204,7 +2238,7 @@ inputData_microbe3):
 		# of M2 ions in the eluant from the microbe 1 column
 		newNBT, newNB1, newNB2, newNB3, newLoadVol = \
 		Calculate_New_Binding_Site_Numbers_and_Load_Volume_2(eluteSolution_microbe1,\
-		inputData_microbe2, target='nM2')
+		inputData_microbe2)
 		
 		# Prepare load solution for microbe 2 and calculate wash solution
 		loadState_microbe2 = LoadState_3Metals_3Sites()
@@ -2228,7 +2262,7 @@ inputData_microbe3):
 		# of M3 ions in the wash from the microbe 2 column
 		newNBT, newNB1, newNB2, newNB3, newLoadVol = \
 		Calculate_New_Binding_Site_Numbers_and_Load_Volume_2(washSolution_microbe2,\
-		inputData_microbe3, target='nM3')
+		inputData_microbe3)
 		
 		# Prepare load solution for microbe 3 and calculate wash solution
 		loadState_microbe3 = LoadState_3Metals_3Sites()
@@ -2262,7 +2296,7 @@ inputData_microbe3):
 		
 		newNBT, newNB1, newNB2, newNB3, newLoadVol = \
 		Calculate_New_Binding_Site_Numbers_and_Load_Volume_2(washSolution_microbe3,\
-		inputData_microbe1, target='nM1')
+		inputData_microbe1)
 		
 		loadState_microbe1.init_with_elute_or_wash_solution_v2(washSolution_microbe3, \
 		inputData_microbe1, newNB1, newNB2, newNB3, newLoadVol)

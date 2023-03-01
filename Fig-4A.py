@@ -1,9 +1,9 @@
 # ------------------------------------------------------------------------------------------------ #
-# Fig-S10A.py
-# Last updated: January 10th, 2023
+# Fig-4A.py
+# Last updated: February 7th, 2023
 # Buz Barstow
 # Code to calculate effect REE purification with 3 microbes with 3 types of binding site. 
-# Figure S10A in Genomic Characterization of Rare Earth Binding by Shewanella oneidensis by 
+# Figure 4A in Genomic Characterization of Rare Earth Binding by Shewanella oneidensis by 
 # Medin et al. 
 # ------------------------------------------------------------------------------------------------ #
 
@@ -19,8 +19,8 @@ import pdb
 
 # ------------------------------------------------------------------------------------------------ #
 # Prepare output
-outputDir = 'output/Fig-S10/'
-fB1_vs_fMx_FileName = 'Fig-S10A.csv'
+outputDir = 'output/Fig-4/'
+fB1_vs_fMx_FileName = 'Fig-4A.csv'
 ensure_dir(outputDir)
 # ------------------------------------------------------------------------------------------------ #
 
@@ -115,7 +115,7 @@ while i < len(microbe1_fB1_Array):
 	kd1_1, kd1_2, kd1_3, kd2_1, kd2_2, kd2_3, kd3_1, kd3_2, kd3_3, \
 	nM1T, nM2T, nM3T, nBT, microbe1_fB1, microbe1_fB2, microbe1_fB3, \
 	loadVol, adjustLoadVol=True, adjustBindingSites=True, maxSubCycles=maxSubCycles, \
-	targetPurity=targetPurity) 
+	targetPurity=targetPurity, adjustBindingSiteTarget='nM1') 
 	# -------------------------------------------------------------------------------------------- #
 	
 	# -------------------------------------------------------------------------------------------- #
@@ -129,7 +129,7 @@ while i < len(microbe1_fB1_Array):
 	kd1_1, kd1_2, kd1_3, kd2_1, kd2_2, kd2_3, kd3_1, kd3_2, kd3_3, \
 	nM1T, nM2T, nM3T, nBT, microbe2_fB1, microbe2_fB2, microbe2_fB3, \
 	loadVol, adjustLoadVol=True, adjustBindingSites=True, maxSubCycles=maxSubCycles, \
-	targetPurity=targetPurity) 
+	targetPurity=targetPurity, adjustBindingSiteTarget='nM2') 
 	# -------------------------------------------------------------------------------------------- #
 	
 	# -------------------------------------------------------------------------------------------- #
@@ -143,7 +143,7 @@ while i < len(microbe1_fB1_Array):
 	kd1_1, kd1_2, kd1_3, kd2_1, kd2_2, kd2_3, kd3_1, kd3_2, kd3_3, \
 	nM1T, nM2T, nM3T, nBT, microbe3_fB1, microbe3_fB2, microbe3_fB3, \
 	loadVol, adjustLoadVol=True, adjustBindingSites=True, maxSubCycles=maxSubCycles, \
-	targetPurity=targetPurity) 
+	targetPurity=targetPurity, adjustBindingSiteTarget='nM3') 
 	# -------------------------------------------------------------------------------------------- #
 	
 	

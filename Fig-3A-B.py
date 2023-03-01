@@ -1,14 +1,14 @@
 # ------------------------------------------------------------------------------------------------ #
-# Fig-S9A-B.py
-# Last updated: January 10th, 2023
+# Fig-3A-B.py
+# Last updated: February 7th, 2023
 # Buz Barstow
 # Code to calculate effect REE purification with 1 microbe with 3 types of binding site. 
-# Figures S9A and B in Genomic Characterization of Rare Earth Binding by Shewanella oneidensis by 
+# Figures 3A and B in Genomic Characterization of Rare Earth Binding by Shewanella oneidensis by 
 # Medin et al. 
 # ------------------------------------------------------------------------------------------------ #
 
 
-from utils.ConcentrationSolverUtils8 import Calculate_Fraction_of_Each_Metal_Bound_to_Three_Sites,\
+from utils.ConcentrationSolverUtils9 import Calculate_Fraction_of_Each_Metal_Bound_to_Three_Sites,\
 Calculate_Binding_Site_Fraction_Arrays
 
 from utils.vectorOutput3 import writeOutputMatrix, generateOutputMatrixWithHeaders, ensure_dir
@@ -20,10 +20,10 @@ from scipy.interpolate import interp1d
 
 # ------------------------------------------------------------------------------------------------ #
 # Prepare output
-outputDir = 'output/Fig-S9/'
-fB1_vs_fMx_FileName = 'Fig-S9A.csv'
-fB1_vs_sep_factor_FileName = 'Fig-S9B.csv'
-example_FileName = 'Fig-S9A-B-examples.csv'
+outputDir = 'output/Fig-3/'
+fB1_vs_fMx_FileName = 'Fig-3A.csv'
+fB1_vs_sep_factor_FileName = 'Fig-3B.csv'
+example_FileName = 'Fig-3A-B-examples.csv'
 ensure_dir(outputDir)
 # ------------------------------------------------------------------------------------------------ #
 

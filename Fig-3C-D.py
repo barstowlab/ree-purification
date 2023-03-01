@@ -1,9 +1,9 @@
 # ------------------------------------------------------------------------------------------------ #
-# Fig-S9C-D.py
-# Last updated: January 10th, 2023
+# Fig-3C-D.py
+# Last updated: February 7th, 2023
 # Buz Barstow
 # Code to calculate effect REE purification with 1 microbe with 3 types of binding site. 
-# Figures S9C and D in Genomic Characterization of Rare Earth Binding by Shewanella oneidensis by 
+# Figures 3C and D in Genomic Characterization of Rare Earth Binding by Shewanella oneidensis by 
 # Medin et al. 
 # ------------------------------------------------------------------------------------------------ #
 
@@ -20,9 +20,9 @@ import pdb
 
 # ------------------------------------------------------------------------------------------------ #
 # Prepare output
-outputDir = 'output/Fig-S9/'
-fB1_vs_fMx_FileName = 'Fig-S9C.csv'
-fB1_vs_sep_factor_FileName = 'Fig-S9D.csv'
+outputDir = 'output/Fig-3/'
+fB1_vs_fMx_FileName = 'Fig-3C.csv'
+fB1_vs_sep_factor_FileName = 'Fig-3D.csv'
 ensure_dir(outputDir)
 # ------------------------------------------------------------------------------------------------ #
 
@@ -83,7 +83,8 @@ while i < len(fB1_Array):
 	inputData = \
 	InputData_3Metals_3Sites(\
 	kd1_1, kd1_2, kd1_3, kd2_1, kd2_2, kd2_3, kd3_1, kd3_2, kd3_3, \
-	nM1T, nM2T, nM3T, nBT, fB1, fB2, fB3, loadVol, adjustLoadVol=True, adjustBindingSites=True) 
+	nM1T, nM2T, nM3T, nBT, fB1, fB2, fB3, loadVol, adjustLoadVol=True, adjustBindingSites=True, \
+	adjustBindingSiteTarget='nMT/2') 
 
 	macroCycleDiagnostic = Run_Macro_Cycle_3Metals_3Sites(inputData)
 	macroCycleDiagnosticReturnDict = macroCycleDiagnostic.summarize_macro_cycle()
