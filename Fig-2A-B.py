@@ -1,6 +1,6 @@
 # ------------------------------------------------------------------------------------------------ #
-# Fig-S8A-B.py
-# Last updated: January 9th, 2023
+# Fig-2A-B.py
+# Last updated: February 7th, 2023
 # Buz Barstow
 # Code to calculate effect REE binding to a microbe with a single type of binding site. 
 # Figures S8A and B in Genomic Characterization of Rare Earth Binding by Shewanella oneidensis by 
@@ -17,10 +17,10 @@ from scipy.interpolate import interp1d
 
 # ------------------------------------------------------------------------------------------------ #
 # Prepare output
-outputDir = 'output/Fig-S8/'
-kd_vs_fMx_FileName = 'Fig-S8A.csv'
-kd_vs_sep_factor_FileName = 'Fig-S8B.csv'
-example_FileName = 'Fig-S8A-B-examples.csv'
+outputDir = 'output/Fig-2/'
+kd_vs_fMx_FileName = 'Fig-2A.csv'
+kd_vs_sep_factor_FileName = 'Fig-2B.csv'
+example_FileName = 'Fig-2A-B-examples.csv'
 ensure_dir(outputDir)
 # ------------------------------------------------------------------------------------------------ #
 

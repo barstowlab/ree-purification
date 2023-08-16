@@ -1,3 +1,13 @@
+# ------------------------------------------------------------------------------------------------ #
+# Fig-3#.py
+# Last updated: February 7th, 2023
+# Buz Barstow
+# Code to calculate effect REE purification with 1 microbe with 3 types of binding site. 
+# Figure 3E in Genomic Characterization of Rare Earth Binding by Shewanella oneidensis by 
+# Medin et al. 
+# ------------------------------------------------------------------------------------------------ #
+
+
 from utils.ConcentrationSolverUtils9 import InputData_3Metals_3Sites, \
 Calculate_Sub_Cycles_to_Reach_Target_Purity_and_M1_Remaining_3M_3S, \
 Calculate_Binding_Site_Fraction_Arrays
@@ -12,8 +22,8 @@ import pdb
 
 # ------------------------------------------------------------------------------------------------ #
 # Prepare output
-outputDir = 'output/Fig-S9/'
-fileName = 'Fig-S9E.csv'
+outputDir = 'output/Fig-3/'
+fileName = 'Fig-3E.csv'
 ensure_dir(outputDir)
 # ------------------------------------------------------------------------------------------------ #
 
@@ -84,7 +94,7 @@ for purity in targetPurities:
 	
 	returnDict = Calculate_Sub_Cycles_to_Reach_Target_Purity_and_M1_Remaining_3M_3S(\
 	kd1_1, kd1_2, kd1_3, kd2_1, kd2_2, kd2_3, kd3_1, kd3_2, kd3_3, \
-	nBT, fB_Array_local, nM1T, nM2T, nM3T, loadVol, purity)
+	nBT, fB_Array_local, nM1T, nM2T, nM3T, loadVol, purity, 'nMT/2')
 	
 	
 	scenarioDict[scenarioKey] = returnDict

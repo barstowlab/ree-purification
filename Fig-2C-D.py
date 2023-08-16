@@ -1,9 +1,9 @@
 # ------------------------------------------------------------------------------------------------ #
-# Fig-S8C-D.py
-# Last updated: January 9th, 2023
+# Fig-2C-D.py
+# Last updated: February 7th, 2023
 # Buz Barstow
 # Code to calculate effect REE binding to a microbe with a single type of binding site. 
-# Figures S8C and D in Genomic Characterization of Rare Earth Binding by Shewanella oneidensis by 
+# Figures 2C and D in Genomic Characterization of Rare Earth Binding by Shewanella oneidensis by 
 # Medin et al. 
 # ------------------------------------------------------------------------------------------------ #
 
@@ -17,9 +17,9 @@ from os.path import join
 
 # ------------------------------------------------------------------------------------------------ #
 # Prepare output
-outputDir = 'output/Fig-S8/'
-kd_vs_fMx_FileName = 'Fig-S8C.csv'
-kd_vs_sep_factor_FileName = 'Fig-S8D.csv'
+outputDir = 'output/Fig-2/'
+kd_vs_fMx_FileName = 'Fig-2C.csv'
+kd_vs_sep_factor_FileName = 'Fig-2D.csv'
 ensure_dir(outputDir)
 # ------------------------------------------------------------------------------------------------ #
 
@@ -53,6 +53,13 @@ nM3T = nMT/3
 nBT = 35.033e-9
 loadVol = 400e-6
 
+targetPurity = 0.99
+
+# This is the option I used originally in 5280
+# adjustBindingSiteTarget = 'nM1'
+# This is the option Sean used in his paper, and seems to get to high purity faster. 
+adjustBindingSiteTarget = 'nMT/2'
+
 scenarioDict = {}
 
 keyFormatter = "{0:.2f}"
@@ -68,7 +75,8 @@ while i < len(inv_kd1_array):
 
 	inputData = \
 	InputData_3Metals_1Site(kd1, kd2, kd3, nM1T, nM2T, nM3T, nBT, loadVol, adjustLoadVol=True, \
-	adjustBindingSites=True, maxSubCycles=100) 
+	adjustBindingSites=True, maxSubCycles=100, adjustBindingSiteTarget=adjustBindingSiteTarget, \
+	targetPurity=targetPurity) 
 
 	macroCycleDiagnostic = Run_Macro_Cycle_3Metals_1Site(inputData)
 	macroCycleDiagnosticReturnDict = macroCycleDiagnostic.summarize_macro_cycle()

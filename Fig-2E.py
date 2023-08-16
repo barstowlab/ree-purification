@@ -1,9 +1,9 @@
 # ------------------------------------------------------------------------------------------------ #
-# Fig-S8E.py
-# Last updated: January 9th, 2023
+# Fig-2E.py
+# Last updated: February 7th, 2023
 # Buz Barstow
 # Code to calculate effect REE binding to a microbe with a single type of binding site. 
-# Figure S8E in Genomic Characterization of Rare Earth Binding by Shewanella oneidensis by 
+# Figure 2E in Genomic Characterization of Rare Earth Binding by Shewanella oneidensis by 
 # Medin et al. 
 # ------------------------------------------------------------------------------------------------ #
 
@@ -20,9 +20,9 @@ import pdb
 
 # ------------------------------------------------------------------------------------------------ #
 # Prepare output
-outputDir = 'output/Fig-S8/'
-fileName = 'Fig-S8E.csv'
-fileName_ex = 'Fig-S8E-examples.csv'
+outputDir = 'output/Fig-2/'
+fileName = 'Fig-2E.csv'
+fileName_ex = 'Fig-2E-examples.csv'
 ensure_dir(outputDir)
 # ------------------------------------------------------------------------------------------------ #
 
@@ -49,6 +49,11 @@ nM3T = nMT/3
 nBT = 35.033e-9
 loadVol = 400e-6
 
+# This is the option I used originally in 5280
+# adjustBindingSiteTarget = 'nM1'
+# This is the option Sean used in his paper, and seems to get to high purity faster. 
+adjustBindingSiteTarget = 'nMT/2'
+
 
 targetPurities = [0.9, 0.95, 0.99]
 
@@ -66,7 +71,7 @@ for purity in targetPurities:
 	scenarioKey = str(purity)
 
 	returnDict = Calculate_Sub_Cycles_to_Reach_Target_Purity_and_M1_Remaining_3M_1S(\
-	kdArray, nBT, nM1T, nM2T, nM3T, loadVol, purity)
+	kdArray, nBT, nM1T, nM2T, nM3T, loadVol, purity, adjustBindingSiteTarget)
 	
 	scenarioDict[scenarioKey] = returnDict
 
