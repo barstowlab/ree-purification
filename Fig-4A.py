@@ -28,7 +28,7 @@ ensure_dir(outputDir)
 # Calculate the purity of M1 and separation factor as eluant is repeatedly passed through column. 
 # I'll start with the kd set
 
-kdBase = 1E-9
+kdBase = 1E-6
 kd1_1 = kdBase*(1/8.0)
 kd1_2 = kdBase*1
 kd1_3 = kdBase*1
@@ -187,7 +187,7 @@ while i < len(scenarioKeys):
 	
 	i += 1
 
-title('C. 3 Sites, Purity of M1 in Microbe 3 Wash vs. Cycle Number')
+title('Fig. 4A. 3 Sites, Purity of M1 in Microbe 3 Wash vs. Cycle Number')
 legend()
 grid()
 xlabel('Cycle Number')

@@ -36,7 +36,7 @@ example_inv_kd1_array = \
 # ------------------------------------------------------------------------------------------------ #
 # Calculate the number of sub-cycles to reach a target purity
 
-kdBase = 1E-9
+kdBase = 1E-6
 kd1Array = array([1.0, 0.9, 0.8, 0.7, 0.6, 0.5, 0.4, 0.3, 0.2, 0.1], float) * kdBase
 
 kd2 = 1.2563958631280851 * kdBase
@@ -82,7 +82,6 @@ inv_kd_array = kdBase/kd1Array
 
 # ------------------------------------------------------------------------------------------------ #
 # Figure out the sub cycles to target purity for the selected inverse kds from the earlier plots.
-
 
 example_line_dict = {}
 
@@ -151,6 +150,7 @@ grid()
 legend()
 xlabel('1E9/kd1')
 ylabel('Sub-cycles to Target Purity')
+title('Fig. 2E. Effect of Reducing KDEu on Steps to Reach High Purity of Eu')
 show()
 xlim(1, example_inv_kd1_array[-1]*1.1)
 
@@ -160,6 +160,7 @@ writeOutputMatrix(join(outputDir, fileName), oMatrix)
 
 
 # ------------------------------------------------------------------------------------------------ #
+# Write out the examples to a CSV table
 headers_examples = ['inv_kd1']
 vectorList_examples = [example_inv_kd1_array]
 

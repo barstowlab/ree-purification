@@ -28,7 +28,7 @@ ensure_dir(outputDir)
 # Calculate the fraction of each metal bound to the binding sites as a function of kd of the site
 # for metal 1. I'll start with the kd set 
 
-kdBase = 1E-9
+kdBase = 1E-6
 kd1Array = array([1.0, 0.9, 0.8, 0.7, 0.6, 0.5, 0.4, 0.3, 0.2, 0.1], float) * kdBase
 kd2 = 1.2563958631280851 * kdBase
 kd3 = 2.28160979282314 * kdBase
@@ -146,7 +146,7 @@ while i < len(invKdExampleArray):
 # ------------------------------------------------------------------------------------------------ #
 # Plot out results of calculation on metal binding fractions
 figure()
-title('A: Single Binding Site Type, Effect of Reducing Kd on Binding Fractions')
+title('Fig. 2A. Single Binding Site Type, Effect of Reducing Kd on Binding Fractions')
 plot(1/(kd1Array/kdBase), fM1bArray, label='M1')
 plot(1/(kd1Array/kdBase), fM2bArray, label='M2')
 plot(1/(kd1Array/kdBase), fM3bArray, label='M3')
@@ -172,7 +172,7 @@ show()
 
 
 figure()
-title('B: Single Binding Site Type, Effect of Reducing Kd on Separation Factor')
+title('Fig. 2B. Single Binding Site Type, Effect of Reducing Kd on Separation Factor')
 plot(1/(kd1Array/kdBase), alpha1_2Array, label='alpha1_2')
 plot(1/(kd1Array/kdBase), alpha1_3Array, label='alpha1_3')
 plot(1/(kd1Array/kdBase), alpha2_3Array, label='alpha2_3')

@@ -26,7 +26,7 @@ ensure_dir(outputDir)
 # ------------------------------------------------------------------------------------------------ #
 # Calculate the purity of M1 and separation factor as eluant is repeatedly passed through column.
 
-kdBase = 1E-9
+kdBase = 1E-6
 
 # I'm selecting some representative inverse Kds that we selected in panels A and B
 
@@ -98,7 +98,7 @@ vectorList_fM1 = []
 
 # Plot out the purity of metal 1 as a function of cycle number.
 figure()
-title('C. 1 Binding Site, Purity of M1 in Eluant vs. Cycle Number')
+title('Fig. 2C. 1 Binding Site, Purity of M1 in Eluant vs. Cycle Number')
 i = 0
 scenarioKeys = list(scenarioDict.keys())
 while i < len(scenarioKeys):
@@ -153,7 +153,7 @@ while i < len(scenarioKeys):
 	
 	i += 1
 
-title('D: 1 Binding Site, Separation Factor vs. Cycle Number')
+title('Fig. 2D. 1 Binding Site, Separation Factor vs. Cycle Number')
 legend()
 grid()
 xlabel('Cycle Number')

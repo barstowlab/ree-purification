@@ -31,7 +31,7 @@ ensure_dir(outputDir)
 # Calculate the fraction of each metal bound to the binding sites as a function of kd of the site
 # for metal 1. I'll start with the kd set 
 
-kdBase = 1E-9
+kdBase = 1E-6
 kd1_1 = kdBase*(1/8.0)
 kd1_2 = kdBase*1
 kd1_3 = kdBase*1
@@ -100,27 +100,57 @@ while i < len(fB1_Array):
 
 # ------------------------------------------------------------------------------------------------ #
 # Figure out the binding site fractions for a few example binding percentages
-fM1bExampleArray = [0.397, 0.401, 0.409, 0.42, 0.44, 0.5, 0.53]
+
+# These examples correspond to the scenarios in Fig-2A-B.py
+# fM1bExampleArray = [0.393, 0.397, 0.401, 0.409, 0.42, 0.44, 0.5, 0.53]
+
+# These examples correspond to just the first 4 scenarios in Fig-2A-B.py (the single gene edit ones)
+fM1bExampleArray = [0.393, 0.397, 0.401, 0.409]
+
 fB1_ExampleArray = []
 
 fM1b_to_fB1_func = interp1d(fM1bArray, fB1_Array)
+fB1_to_fM1b_func = interp1d(fB1_Array, fM1bArray)
+
 
 example_horiz_line_array_fM1b_plot = []
 example_vert_line_array_fM1b_plot = []
 
+# First, get fB1 examples corresponding to the fM1b examples
 i = 0
 while i < len(fM1bExampleArray):
+	fM1bExample = fM1bExampleArray[i]
+	fB1 = float(fM1b_to_fB1_func(fM1bExample))
+	fB1_ExampleArray.append(fB1)
+	print(fM1bExample)
+	i += 1
+	
+# Second, do the opposite. Make some new fB1 examples and figure out the corresponding fM1b
+# examples. 
+fB1_ExampleArray_part2 = [0.7, 0.8, 0.85, 0.9, 0.95]
+i = 0
+while i < len(fB1_ExampleArray_part2):
+	fB1Example = fB1_ExampleArray_part2[i]
+	fM1b = float(fB1_to_fM1b_func(fB1Example))
+	fM1bExampleArray.append(fM1b)
+	print(fB1Example)
+	i += 1
+	
+fB1_ExampleArray += fB1_ExampleArray_part2
+
+
+
+# Now, make marking lines for examples
+i = 0
+while i < len(fM1bExampleArray):
+	
+	fB1 = fB1_ExampleArray[i]
+	fM1bExample = fM1bExampleArray[i]
 	
 	horizLine_x_Array = []
 	horizLine_y_Array = []
 	vertLine_x_Array = []
 	vertLine_y_Array = []
-
-	fM1bExample = fM1bExampleArray[i]
-	fB1 = float(fM1b_to_fB1_func(fM1bExample))
-	fB1_ExampleArray.append(fB1)
-	
-	print(fM1bExample)
 	
 	vertLine_x_Array.append(fB1)
 	vertLine_x_Array.append(fB1)
@@ -178,7 +208,7 @@ while i < len(fB1_ExampleArray):
 # ------------------------------------------------------------------------------------------------ #
 # Plot out results of calculation on metal binding fractions
 figure()
-title('A. 3 Sites. Fraction of M1 Bound as M1-site Fraction is Increased')
+title('Fig. 3A. 3 Sites. Fraction of M1 Bound as M1-site Fraction is Increased')
 plot(fB1_Array, fM1bArray, label='M1')
 plot(fB1_Array, fM2bArray, label='M2')
 plot(fB1_Array, fM3bArray, label='M3')
@@ -207,7 +237,7 @@ show()
 
 
 figure()
-title('B. 3 Sites. Separation Factors as M1-site Fraction is Increased')
+title('Fig. 3B. 3 Sites. Separation Factors as M1-site Fraction is Increased')
 plot(fB1_Array, alpha1_2Array, label='alpha1_2')
 plot(fB1_Array, alpha1_3Array, label='alpha1_3')
 plot(fB1_Array, alpha2_3Array, label='alpha2_3')

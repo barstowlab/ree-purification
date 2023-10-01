@@ -30,7 +30,7 @@ ensure_dir(outputDir)
 # Calculate the purity of M1 and separation factor as eluant is repeatedly passed through column. 
 # I'll start with the kd set
 
-kdBase = 1E-9
+kdBase = 1E-6
 kd1_1 = kdBase*(1/8.0)
 kd1_2 = kdBase*1
 kd1_3 = kdBase*1
@@ -57,7 +57,7 @@ loadVol = 400e-6
 # We start out with the original fitted fractions of each site, and then figure out how to reduce
 # the fractions of binding sites 2 and 3 as the fraction of binding site 1 increases. 
 
-fB1_Array = [0.4618352672074258, 0.473, 0.482, 0.502, 0.530, 0.584, 0.778, 0.909]
+fB1_Array = [0.4618352672074258, 0.473, 0.482, 0.502, 0.7, 0.8, 0.85, 0.9, 0.95]
 fB2_0 = 0.3703005831465813
 fB3_0 = 0.16786402382522572
 
@@ -129,7 +129,7 @@ while i < len(scenarioKeys):
 	
 	i += 1
 
-title('C. 3 Sites, Purity of M1 in Eluant vs. Cycle Number')
+title('Fig. 3C. 3 Sites, Purity of M1 in Eluant vs. Cycle Number')
 legend()
 grid()
 xlabel('Cycle Number')
@@ -169,7 +169,7 @@ while i < len(scenarioKeys):
 	
 	i += 1
 
-title('D. 3 Sites, Separation Factor vs. Cycle Number')
+title('Fig. 3D. 3 Sites, Separation Factor vs. Cycle Number')
 legend()
 grid()
 xlabel('Cycle Number')
